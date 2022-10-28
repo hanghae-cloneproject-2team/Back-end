@@ -41,7 +41,7 @@ public class PostController {
     return postService.getAllPost();
   }
 
-  @PutMapping(value = "//api/posting/{postingId}")
+  @PutMapping(value = "/api/posting/{postingId}")
   public ResponseDto<?> updatePost(@PathVariable Long postingId, @RequestBody PostRequestDto postRequestDto,
       HttpServletRequest request) {
     return postService.updatePost(postingId, postRequestDto, request);
