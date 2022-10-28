@@ -32,7 +32,22 @@ public class Post extends Timestamped {
   private String title;
 
   @Column(nullable = false)
-  private String content;
+  private Long price;// 목표금액
+
+  @Column(nullable = false)
+  private String thumbnail;// 썸네일
+
+  @Column(nullable = false)
+  private String head1;
+  @Column(nullable = false)
+  private String content1;
+
+  @Column(nullable = false)
+  private String image1;
+
+  @Column(nullable = false)
+  private String endDate; //기부 종료일
+
 
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Comment> comments;
@@ -43,7 +58,7 @@ public class Post extends Timestamped {
 
   public void update(PostRequestDto postRequestDto) {
     this.title = postRequestDto.getTitle();
-    this.content = postRequestDto.getContent();
+//    this.content = postRequestDto.getContent();
   }
 
   public boolean validateMember(Member member) {

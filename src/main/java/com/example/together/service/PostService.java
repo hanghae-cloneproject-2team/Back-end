@@ -46,7 +46,6 @@ public class PostService {
 
     Post post = Post.builder()
         .title(requestDto.getTitle())
-        .content(requestDto.getContent())
         .member(member)
         .build();
     postRepository.save(post);
@@ -54,7 +53,6 @@ public class PostService {
         PostResponseDto.builder()
             .id(post.getId())
             .title(post.getTitle())
-            .content(post.getContent())
             .author(post.getMember().getNickname())
             .createdAt(post.getCreatedAt())
             .modifiedAt(post.getModifiedAt())
@@ -88,7 +86,6 @@ public class PostService {
         PostResponseDto.builder()
             .id(post.getId())
             .title(post.getTitle())
-            .content(post.getContent())
             .commentResponseDtoList(commentResponseDtoList)
             .author(post.getMember().getNickname())
             .createdAt(post.getCreatedAt())
