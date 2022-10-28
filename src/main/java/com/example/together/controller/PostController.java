@@ -24,32 +24,33 @@ public class PostController {
                   paramType = "header"
           )
   })
-  @PostMapping(value = "/api/auth/post")
+
+  @PostMapping(value = "/api/posting")
   public ResponseDto<?> createPost(@RequestBody PostRequestDto requestDto,
       HttpServletRequest request) {
     return postService.createPost(requestDto, request);
   }
 
-  @GetMapping(value = "/api/post/{id}")
-  public ResponseDto<?> getPost(@PathVariable Long id) {
-    return postService.getPost(id);
+  @GetMapping(value = "/api/posting/{postingId}")
+  public ResponseDto<?> getPost(@PathVariable Long postingId) {
+    return postService.getPost(postingId);
   }
 
-  @GetMapping(value = "/api/post")
+  @GetMapping(value = "/api/posting")
   public ResponseDto<?> getAllPosts() {
     return postService.getAllPost();
   }
 
-  @PutMapping(value = "/api/auth/post/{id}")
-  public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto,
+  @PutMapping(value = "/api/posting/{postingId}")
+  public ResponseDto<?> updatePost(@PathVariable Long postingId, @RequestBody PostRequestDto postRequestDto,
       HttpServletRequest request) {
-    return postService.updatePost(id, postRequestDto, request);
+    return postService.updatePost(postingId, postRequestDto, request);
   }
 
-  @DeleteMapping(value = "/api/auth/post/{id}")
-  public ResponseDto<?> deletePost(@PathVariable Long id,
+  @DeleteMapping(value = "/api/posting/{postingId}")
+  public ResponseDto<?> deletePost(@PathVariable Long postingId,
       HttpServletRequest request) {
-    return postService.deletePost(id, request);
+    return postService.deletePost(postingId, request);
   }
 
 }
