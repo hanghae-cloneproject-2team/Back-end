@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class CommentRequestDto {
   private Long postId;
   private Long donation;
-  private String comment;
   private String nickname;
+  private String comment;
 }

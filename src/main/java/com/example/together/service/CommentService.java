@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentService {
 
   private final CommentRepository commentRepository;
-
   private final TokenProvider tokenProvider;
   private final PostService postService;
 

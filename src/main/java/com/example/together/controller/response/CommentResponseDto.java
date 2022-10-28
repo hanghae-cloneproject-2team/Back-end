@@ -14,6 +14,6 @@ public class CommentResponseDto {
   private Long id;
   private Long donation;
   private String comment;
-  private LocalDateTime createdAt;
   private String nickname;
+  private LocalDateTime createdAt;
 }
