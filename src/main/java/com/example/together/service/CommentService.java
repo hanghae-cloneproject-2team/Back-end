@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentService {
 
   private final CommentRepository commentRepository;
-
   private final TokenProvider tokenProvider;
   private final PostService postService;
 
@@ -50,16 +49,15 @@ public class CommentService {
     Comment comment = Comment.builder()
         .member(member)
         .post(post)
-        .content(requestDto.getContent())
+        .comment(requestDto.getComment())
         .build();
     commentRepository.save(comment);
     return ResponseDto.success(
         CommentResponseDto.builder()
             .id(comment.getId())
-            .author(comment.getMember().getNickname())
-            .content(comment.getContent())
+            .nickname(comment.getMember().getNickname())
+            .comment(comment.getComment())
             .createdAt(comment.getCreatedAt())
-            .modifiedAt(comment.getModifiedAt())
             .build()
     );
   }
@@ -78,10 +76,9 @@ public class CommentService {
       commentResponseDtoList.add(
           CommentResponseDto.builder()
               .id(comment.getId())
-              .author(comment.getMember().getNickname())
-              .content(comment.getContent())
+              .nickname(comment.getMember().getNickname())
+              .comment(comment.getComment())
               .createdAt(comment.getCreatedAt())
-              .modifiedAt(comment.getModifiedAt())
               .build()
       );
     }
@@ -123,10 +120,9 @@ public class CommentService {
     return ResponseDto.success(
         CommentResponseDto.builder()
             .id(comment.getId())
-            .author(comment.getMember().getNickname())
-            .content(comment.getContent())
+            .nickname(comment.getMember().getNickname())
+            .comment(comment.getComment())
             .createdAt(comment.getCreatedAt())
-            .modifiedAt(comment.getModifiedAt())
             .build()
     );
   }
