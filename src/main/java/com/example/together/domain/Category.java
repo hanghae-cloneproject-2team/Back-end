@@ -6,13 +6,16 @@ import java.util.Arrays;
 
 @Getter
 public enum Category {
-    지구촌("지구촌"),
-    어려운이웃("어려운이웃"),
-    동물("동물");
+    지구촌("지구촌",1),
+    어려운이웃("어려운이웃",2),
+    동물("동물",3);
 
     private  String value;
+    private int code;
 
-    Category(String value) {
+    Category(String value, int code) {
+
         this.value = value;
+        this.code = code;
     }
 }
