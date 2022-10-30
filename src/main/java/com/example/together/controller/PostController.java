@@ -46,6 +46,11 @@ public class PostController {
     return postService.getAllPost();
   }
 
+  @GetMapping(value = "/api/posting/category/{category}")
+  public ResponseDto<?> getPost(@PathVariable String category) {
+    return postService.getPostbyCategory(category);
+  }
+
 
   @PutMapping(value = "/api/posting/{postingId}",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
   public ResponseDto<?> updatePost(@PathVariable Long postingId,

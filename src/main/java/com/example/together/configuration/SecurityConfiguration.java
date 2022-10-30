@@ -60,6 +60,7 @@ public class SecurityConfiguration {
         .antMatchers("/api/member/**").permitAll()
         .antMatchers(HttpMethod.GET,"/api/posting").permitAll() // 추가
         .antMatchers("/api/posting/{postingId}").permitAll() // 추가
+        .antMatchers("/api/posting/category/{category}").permitAll() // 추가
         .antMatchers("/api/comment/**").permitAll()
         .antMatchers( "/v2/api-docs",
                 "/swagger-resources",

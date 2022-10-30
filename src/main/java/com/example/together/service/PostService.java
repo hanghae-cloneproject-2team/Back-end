@@ -5,10 +5,7 @@ import com.example.together.controller.handler.CustomException;
 import com.example.together.controller.response.CommentResponseDto;
 import com.example.together.controller.response.PostListResponseDto;
 import com.example.together.controller.response.PostResponseDto;
-import com.example.together.domain.Category;
-import com.example.together.domain.Comment;
-import com.example.together.domain.Member;
-import com.example.together.domain.Post;
+import com.example.together.domain.*;
 import com.example.together.controller.request.PostRequestDto;
 import com.example.together.controller.response.ResponseDto;
 import com.example.together.jwt.TokenProvider;
@@ -147,6 +144,29 @@ public class PostService {
   @Transactional(readOnly = true)
   public ResponseDto<?> getAllPost() {
     List<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
+    List<PostListResponseDto> postListResponseDtoList = new ArrayList<>();
+    for (Post post : postList) {
+      postListResponseDtoList.add(
+              PostListResponseDto.builder()
+                      .id(post.getId())
+                      .title(post.getTitle())
+                      .thumbnail(post.getThumbnail())
+                      .author(post.getMember().getNickname())
+                      .priceState(post.getPriceState())
+                      .price(post.getPrice())
+                      .createdAt(post.getCreatedAt())
+                      .modifiedAt(post.getModifiedAt())
+                      .build()
+      );
+    }
+
+    return ResponseDto.success(postListResponseDtoList);
+  }
+
+  @Transactional(readOnly = true)
+  public ResponseDto<?> getPostbyCategory(String string){
+    Category category = new CategoryConverter().convertToEntityAttribute(string);
+    List<Post> postList = postRepository.findAllByCategory(category);
     List<PostListResponseDto> postListResponseDtoList = new ArrayList<>();
     for (Post post : postList) {
       postListResponseDtoList.add(

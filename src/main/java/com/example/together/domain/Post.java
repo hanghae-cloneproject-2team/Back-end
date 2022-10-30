@@ -2,16 +2,8 @@ package com.example.together.domain;
 
 import com.example.together.controller.request.PostRequestDto;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,7 +43,7 @@ public class Post extends Timestamped {
   @Column(nullable = false)
   private String endDate; //기부 종료일
 
-  @Column
+  @Convert(converter = CategoryConverter.class)
   private Category category; //카테고리
 
 

@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 @Getter
 public enum Category {
-    지구촌("지구촌",1),
-    어려운이웃("어려운이웃",2),
-    동물("동물",3);
+    earth("earth",1),
+    friends("friends",2),
+    animal("animal",3);
 
     private  String value;
     private int code;
@@ -17,5 +17,12 @@ public enum Category {
 
         this.value = value;
         this.code = code;
+    }
+
+    public static Category fromCode(String dbData){
+        return Arrays.stream(Category.values())
+                .filter(v -> v.getValue().equals(dbData))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("포스트 카테고리에 %s가 존재하지 않습니다.", dbData)));
     }
 }
