@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CommentRequestDto {
   private Long postId;
-  private Long donation;
+  private Long donation = Long.valueOf(100);
   private String nickname;
   private String comment;
 }
