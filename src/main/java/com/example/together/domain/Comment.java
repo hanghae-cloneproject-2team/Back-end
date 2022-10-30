@@ -29,14 +29,14 @@ public class Comment extends Timestamped {
   @ManyToOne(fetch = FetchType.LAZY)
   private Member member;
 
-  @JoinColumn(name = "board_id", nullable = false)
+  @JoinColumn(name = "post_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)
   private Post post;
 
   @Column(nullable = false)
-  private String donation;
+  private Long donation;
 
-  @Column(nullable = false)
+  @Column(length = 500, nullable = false)
   private String comment;
 
   @Column(nullable = false)
