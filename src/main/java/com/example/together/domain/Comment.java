@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 public class Comment extends Timestamped {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

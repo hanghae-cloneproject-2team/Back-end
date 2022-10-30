@@ -12,5 +12,4 @@ public class CommentRequestDto {
   private Long donation = Long.valueOf(100);
   private String nickname;
   private String comment;
-
 }
