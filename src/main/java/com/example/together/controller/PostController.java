@@ -7,15 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
 public class PostController {
 
   private final PostService postService;
-
   @ApiImplicitParams({
           @ApiImplicitParam(
                   name = "Refresh-Token",
@@ -25,10 +27,13 @@ public class PostController {
           )
   })
 
-  @PostMapping(value = "/api/posting")
-  public ResponseDto<?> createPost(@RequestBody PostRequestDto requestDto,
-      HttpServletRequest request) {
-    return postService.createPost(requestDto, request);
+
+  @PostMapping(value = "/api/posting",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
+  public ResponseDto<?> createPost(@RequestPart(value = "postDto") PostRequestDto requestDto,
+                                   @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
+                                   @RequestParam(value = "image1", required = false) MultipartFile image1,
+                                   HttpServletRequest request) {
+    return postService.createPost(requestDto,image1, thumbnail, request);
   }
 
   @GetMapping(value = "/api/posting/{postingId}")
@@ -41,10 +46,19 @@ public class PostController {
     return postService.getAllPost();
   }
 
-  @PutMapping(value = "/api/posting/{postingId}")
-  public ResponseDto<?> updatePost(@PathVariable Long postingId, @RequestBody PostRequestDto postRequestDto,
+  @GetMapping(value = "/api/posting/category/{category}")
+  public ResponseDto<?> getPost(@PathVariable String category) {
+    return postService.getPostbyCategory(category);
+  }
+
+
+  @PutMapping(value = "/api/posting/{postingId}",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
+  public ResponseDto<?> updatePost(@PathVariable Long postingId,
+                                   @RequestPart(value = "postDto") PostRequestDto requestDto,
+                                   @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
+                                   @RequestParam(value = "image1", required = false) MultipartFile image1,
       HttpServletRequest request) {
-    return postService.updatePost(postingId, postRequestDto, request);
+    return postService.updatePost(postingId, requestDto, image1, thumbnail, request);
   }
 
   @DeleteMapping(value = "/api/posting/{postingId}")

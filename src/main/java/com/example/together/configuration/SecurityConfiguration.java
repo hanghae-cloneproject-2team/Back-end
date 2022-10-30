@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -33,6 +34,7 @@ public class SecurityConfiguration {
   private final AuthenticationEntryPointException authenticationEntryPointException;
 //  private final AccessDeniedHandlerException accessDeniedHandlerException;
 
+  private final CorsConfig corsConfig;
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -56,7 +58,9 @@ public class SecurityConfiguration {
         .and()
         .authorizeRequests()
         .antMatchers("/api/member/**").permitAll()
-        .antMatchers("/api/post/**").permitAll()
+        .antMatchers(HttpMethod.GET,"/api/posting").permitAll() // 추가
+        .antMatchers("/api/posting/{postingId}").permitAll() // 추가
+        .antMatchers("/api/posting/category/{category}").permitAll() // 추가
         .antMatchers("/api/comment/**").permitAll()
         .antMatchers( "/v2/api-docs",
                 "/swagger-resources",
@@ -70,6 +74,7 @@ public class SecurityConfiguration {
         .anyRequest().authenticated()
 
         .and()
+        .addFilter(corsConfig.corsFilter())
         .apply(new JwtSecurityConfiguration(SECRET_KEY, tokenProvider, userDetailsService));
 
     return http.build();
