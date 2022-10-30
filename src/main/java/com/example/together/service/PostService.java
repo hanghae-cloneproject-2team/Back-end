@@ -13,7 +13,6 @@ import com.example.together.repository.CommentRepository;
 import com.example.together.repository.PostRepository;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -113,10 +112,10 @@ public class PostService {
       commentResponseDtoList.add(
           CommentResponseDto.builder()
               .id(comment.getId())
-              .author(comment.getMember().getNickname())
-              .content(comment.getContent())
+              .donation(comment.getDonation())
+              .nickname(comment.getMember().getNickname())
+              .comment(comment.getComment())
               .createdAt(comment.getCreatedAt())
-              .modifiedAt(comment.getModifiedAt())
               .build()
       );
     }
