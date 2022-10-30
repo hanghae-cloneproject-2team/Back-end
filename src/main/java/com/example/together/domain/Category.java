@@ -6,9 +6,9 @@ import java.util.Arrays;
 
 @Getter
 public enum Category {
-    earth("earth",1),
-    friends("friends",2),
-    animal("animal",3);
+    earth("earth",0),
+    friends("friends",1),
+    animal("animal",2);
 
     private  String value;
     private int code;

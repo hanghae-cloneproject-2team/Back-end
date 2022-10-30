@@ -27,7 +27,7 @@ public class Post extends Timestamped {
   private Long price;// 목표금액
 
   @Column(nullable = false)
-  private Long priceState = 0L;// 목표금액
+  private Long priceState = 0L;// 현재금액
 
   @Column(nullable = true)
   private String thumbnail;// 썸네일
