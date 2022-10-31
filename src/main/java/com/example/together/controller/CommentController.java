@@ -8,33 +8,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Validated
 @RequiredArgsConstructor
 @RestController
+@RequestMapping(value = "/api")
 public class CommentController {
 
   private final CommentService commentService;
 
-  @PostMapping(value = "/api/auth/comment")
-  public ResponseDto<?> createComment(@RequestBody CommentRequestDto requestDto,
+  @PostMapping(value = "/comment")
+  public ResponseDto<?> writeComment(@RequestBody CommentRequestDto requestDto,
       HttpServletRequest request) {
-    return commentService.createComment(requestDto, request);
+    return commentService.writeComment(requestDto, request);
   }
 
-  @GetMapping(value = "/api/comment/{id}")
-  public ResponseDto<?> getAllComments(@PathVariable Long id) {
-    return commentService.getAllCommentsByPost(id);
-  }
+//  @GetMapping(value = "/api/comment/{id}")
+//  public ResponseDto<?> getAllComments(@PathVariable Long id) {
+//    ret  urn commentService.getAllCommentsByPost(id);
+//  }
 
-  @PutMapping(value = "/api/auth/comment/{id}")
-  public ResponseDto<?> updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto,
-      HttpServletRequest request) {
-    return commentService.updateComment(id, requestDto, request);
-  }
-
-  @DeleteMapping(value = "/api/auth/comment/{id}")
-  public ResponseDto<?> deleteComment(@PathVariable Long id,
-      HttpServletRequest request) {
-    return commentService.deleteComment(id, request);
+  @DeleteMapping(value = "/comment/{commentId}")
+  public ResponseDto<?> deleteComment(@PathVariable Long commentId, @RequestBody CommentRequestDto requestDto, HttpServletRequest request) {
+    return commentService.deleteComment(commentId, requestDto, request);
   }
 }
