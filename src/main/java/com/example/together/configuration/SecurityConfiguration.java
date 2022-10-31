@@ -36,6 +36,7 @@ public class SecurityConfiguration {
   private final AccessDeniedHandlerException accessDeniedHandlerException;
   private final CorsConfig corsConfig;
 
+  private final CorsConfig corsConfig;
   @Bean
   public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 
