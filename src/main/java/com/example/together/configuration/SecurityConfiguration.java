@@ -1,6 +1,7 @@
 package com.example.together.configuration;
 
 //import com.example.intermediate.jwt.AccessDeniedHandlerException;
+import com.example.together.jwt.AccessDeniedHandlerException;
 import com.example.together.jwt.AuthenticationEntryPointException;
 import com.example.together.jwt.TokenProvider;
 import com.example.together.service.UserDetailsServiceImpl;
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -31,46 +33,55 @@ public class SecurityConfiguration {
   private final TokenProvider tokenProvider;
   private final UserDetailsServiceImpl userDetailsService;
   private final AuthenticationEntryPointException authenticationEntryPointException;
-//  private final AccessDeniedHandlerException accessDeniedHandlerException;
+  private final AccessDeniedHandlerException accessDeniedHandlerException;
+  private final CorsConfig corsConfig;
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+  public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 
   @Bean
   @Order(SecurityProperties.BASIC_AUTH_ORDER)
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors();
-
+    http
+            .headers()
+            .xssProtection()
+            .and()
+            .contentSecurityPolicy("script-src 'self'");
     http.csrf().disable()
 
-        .exceptionHandling()
-        .authenticationEntryPoint(authenticationEntryPointException)
-//        .accessDeniedHandler(accessDeniedHandlerException)
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPointException)
+            .accessDeniedHandler(accessDeniedHandlerException)
 
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-        .and()
-        .authorizeRequests()
-        .antMatchers("/api/member/**").permitAll()
-        .antMatchers("/api/post/**").permitAll()
-        .antMatchers("/api/comment/**").permitAll()
-        .antMatchers( "/v2/api-docs",
-                "/swagger-resources",
-                "/swagger-resources/**",
-                "/configuration/ui",
-                "/configuration/security",
-                "/swagger-ui.html",
-                "/webjars/**",
-                "/v3/api-docs/**",
-                "/swagger-ui/**").permitAll()
-        .anyRequest().authenticated()
+            /////////////////수정필요////////////////
+            .and()
+            .authorizeRequests()
+            .antMatchers("/api/member/**").permitAll()
+            .antMatchers(HttpMethod.GET,"/api/posting").permitAll() // 추가
+            .antMatchers("/api/posting/{postingId}").permitAll() // 추가
+            .antMatchers("/api/posting/category/{category}").permitAll() // 추가
+            .antMatchers("/api/comment/**").permitAll()
+//            .antMatchers("/api/auth/**").access("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")
+//            .antMatchers("/api/admin/**").access("hasRole('ROLE_ADMIN')")
+//            .antMatchers("/v2/api-docs",
+//                  "/swagger-resources",
+////                    "/swagger-resources/**",
+//                    "/configuration/ui",
+//                    "/configuration/security",
+////                    "/swagger-ui.html",
+//                    "/webjars/**",
+//                    "/v3/api-docs/**",
+//                    "/swagger-ui/**").permitAll()
+            .anyRequest().authenticated()
 
-        .and()
-        .apply(new JwtSecurityConfiguration(SECRET_KEY, tokenProvider, userDetailsService));
+            .and()
+            .addFilter(corsConfig.corsFilter())
+            .apply(new JwtSecurityConfiguration(SECRET_KEY, tokenProvider, userDetailsService));
 
     return http.build();
   }

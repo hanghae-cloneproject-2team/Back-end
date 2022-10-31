@@ -1,12 +1,13 @@
 package com.example.together.domain;
 
+import com.example.together.shared.Authority;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,11 +27,31 @@ public class Member extends Timestamped {
   private Long id;
 
   @Column(nullable = false)
-  private String nickname;
+  private String emailId;
 
+  @Column(nullable = false)
+  private String nickname;
   @Column(nullable = false)
   @JsonIgnore
   private String password;
+
+  ///////////////수정필요
+  @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+  @JsonBackReference
+  private List<Post> post;
+  ///////////////수정필요
+  @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+  @JsonBackReference
+  private List<Comment> comment;
+  ///////////////수정필요
+//  @OneToMany(mappedBy = "member",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//  @JsonBackReference
+//  private List<Cheer> cheer;
+
+  /////////////////수정필요
+//  @Column(nullable = false)
+//  @Enumerated(value = EnumType.STRING)
+//  private Authority role;
 
   @Override
   public boolean equals(Object o) {

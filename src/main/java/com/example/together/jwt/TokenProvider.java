@@ -6,24 +6,28 @@ import com.example.together.domain.UserDetailsImpl;
 import com.example.together.controller.response.ResponseDto;
 import com.example.together.controller.request.TokenDto;
 import com.example.together.repository.RefreshTokenRepository;
+import com.example.together.service.UserDetailsServiceImpl;
 import com.example.together.shared.Authority;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 import java.security.Key;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,13 +39,13 @@ public class TokenProvider {
   private static final String BEARER_PREFIX = "Bearer ";
   private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            //30분
   private static final long REFRESH_TOKEN_EXPRIRE_TIME = 1000 * 60 * 60 * 24 * 7;     //7일
-
   private final Key key;
-
+  private final UserDetailsServiceImpl userDetailsService;
   private final RefreshTokenRepository refreshTokenRepository;
 
   public TokenProvider(@Value("${jwt.secret}") String secretKey,
-      RefreshTokenRepository refreshTokenRepository) {
+                       UserDetailsServiceImpl userDetailsService, RefreshTokenRepository refreshTokenRepository) {
+    this.userDetailsService = userDetailsService;
     this.refreshTokenRepository = refreshTokenRepository;
     byte[] keyBytes = Decoders.BASE64.decode(secretKey);
     this.key = Keys.hmacShaKeyFor(keyBytes);
@@ -52,11 +56,11 @@ public class TokenProvider {
 
     Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
     String accessToken = Jwts.builder()
-        .setSubject(member.getNickname())
-        .claim(AUTHORITIES_KEY, Authority.ROLE_MEMBER.toString())
-        .setExpiration(accessTokenExpiresIn)
-        .signWith(key, SignatureAlgorithm.HS256)
-        .compact();
+            .setSubject(member.getEmailId())
+            .claim(AUTHORITIES_KEY, Authority.ROLE_MEMBER.toString())
+            .setExpiration(accessTokenExpiresIn)
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact();
 
     String refreshToken = Jwts.builder()
         .setExpiration(new Date(now + REFRESH_TOKEN_EXPRIRE_TIME))
@@ -80,6 +84,7 @@ public class TokenProvider {
 
   }
 
+    //토큰 만료시 재발급
 //  public Authentication getAuthentication(String accessToken) {
 //    Claims claims = parseClaims(accessToken);
 //
@@ -122,13 +127,13 @@ public class TokenProvider {
     return false;
   }
 
-//  private Claims parseClaims(String accessToken) {
-//    try {
-//      return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
-//    } catch (ExpiredJwtException e) {
-//      return e.getClaims();
-//    }
-//  }
+  private Claims parseClaims(String accessToken) {
+    try {
+      return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
+    } catch (ExpiredJwtException e) {
+      return e.getClaims();
+    }
+  }
 
   @Transactional(readOnly = true)
   public RefreshToken isPresentRefreshToken(Member member) {

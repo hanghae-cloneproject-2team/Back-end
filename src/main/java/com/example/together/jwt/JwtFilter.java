@@ -33,11 +33,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
   public static String AUTHORIZATION_HEADER = "Authorization";
   public static String BEARER_PREFIX = "Bearer ";
-
   public static String AUTHORITIES_KEY = "auth";
-
   private final String SECRET_KEY;
-
   private final TokenProvider tokenProvider;
   private final UserDetailsServiceImpl userDetailsService;
 
