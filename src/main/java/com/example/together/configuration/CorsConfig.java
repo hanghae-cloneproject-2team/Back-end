@@ -24,6 +24,6 @@ public class CorsConfig {
         // 혜수님 
         //config.addExposedHeader("*");
         //source.registerCorsConfiguration("/api/**",config);
-        //return new CorsFilter(source);
+        return new CorsFilter(source);
     }
 }
