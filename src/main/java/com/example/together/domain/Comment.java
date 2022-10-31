@@ -1,14 +1,9 @@
 package com.example.together.domain;
 
 import com.example.together.controller.request.CommentRequestDto;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,11 +30,15 @@ public class Comment extends Timestamped {
   @Column(nullable = false)
   private Long donation;
 
-  @Column(length = 500, nullable = false)
+  @Column(length = 500)
   private String comment;
 
   @Column(nullable = false)
   private String nickname;
+
+  @Enumerated(EnumType.STRING)
+  private DonationType donationType;
+
 
   public void update(CommentRequestDto commentRequestDto) {
     this.comment = commentRequestDto.getComment();
