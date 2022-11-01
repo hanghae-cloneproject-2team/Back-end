@@ -30,7 +30,7 @@ public class Comment extends Timestamped {
   @Column(nullable = false)
   private Long donation;
 
-  @Column(length = 500)
+  @Column(length = 500, nullable = false)
   private String comment;
 
   @Column(nullable = false)
