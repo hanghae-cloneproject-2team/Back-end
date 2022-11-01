@@ -46,7 +46,7 @@ public class CommentService {
         if (null == post) {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
-
+        post.addPriceState(100L);
         // 4. insert 정보
         Comment comment = Comment.builder()
                 .member(member)
@@ -78,7 +78,7 @@ public class CommentService {
         if (null == post) {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
-
+        post.addPriceState(requestDto.getDonation());
         // 4. insert 정보
         Comment comment = Comment.builder()
                 .member(member)

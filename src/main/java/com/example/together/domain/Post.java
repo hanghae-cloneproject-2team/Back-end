@@ -68,5 +68,7 @@ public class Post extends Timestamped {
   public boolean validateMember(Member member) {
     return !this.member.equals(member);
   }
-
+  public void addPriceState(Long donation){
+    this.priceState += donation;
+  }
 }

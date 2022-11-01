@@ -76,6 +76,7 @@ public class CheerService {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
+        post.addPriceState(100L);
         // 4. 회원번호, 게시글번호 조회
         Optional<Cheer> cheerInfo = cheerRepository.findByMemberAndPost(member, post);
 
