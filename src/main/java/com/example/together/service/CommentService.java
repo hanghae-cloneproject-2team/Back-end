@@ -94,30 +94,6 @@ public class CommentService {
         return ResponseDto.success(" 기부에 동참해주셔서 감사합니다 !");
     }
 
-    @Transactional(readOnly = true)
-    public ResponseDto<?> getAllCommentsByPost(Long postId) {
-        Post post = postService.isPresentPost(postId);
-        if (null == post) {
-            return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
-        }
-
-        List<Comment> commentList = commentRepository.findAllByPost(post);
-        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
-
-        for (Comment comment : commentList) {
-            commentResponseDtoList.add(
-                    CommentResponseDto.builder()
-                            .id(comment.getId())
-                            .nickname(comment.getMember().getNickname())
-                            .comment(comment.getComment())
-                            .donation(comment.getDonation())
-                            .createdAt(comment.getCreatedAt())
-                            .build()
-            );
-        }
-        return ResponseDto.success(commentResponseDtoList);
-    }
-
     /* 댓글 삭제 */
     @Transactional
     public ResponseDto<?> deleteComment(Long commentId, CommentRequestDto requestDto, HttpServletRequest request) {

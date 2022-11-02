@@ -55,8 +55,8 @@ public class PostController {
   @PutMapping(value = "/api/posting/{postingId}",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
   public ResponseDto<?> updatePost(@PathVariable Long postingId,
                                    @RequestPart(value = "postDto") PostRequestDto requestDto,
-                                   @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
-                                   @RequestParam(value = "image1", required = false) MultipartFile image1,
+                                   @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
+                                   @RequestPart(value = "image1", required = false) MultipartFile image1,
       HttpServletRequest request) {
     return postService.updatePost(postingId, requestDto, image1, thumbnail, request);
   }

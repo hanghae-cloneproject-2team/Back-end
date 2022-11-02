@@ -18,7 +18,7 @@ public interface CheerRepository extends JpaRepository<Cheer, Long> {
     Long selectCheerDonationCnt(@Param("post_id") Post post);
 
     // 응원기부금 총 금액( postId )
-    @Query(value = "select sum(donation) as total from cheer where post_id = :post_id", nativeQuery = true)
+    @Query(value = "select IFNULL(sum(donation),0) as total from cheer where post_id = :post_id", nativeQuery = true)
     Long selecCheerDonationSum(@Param("post_id") Post post);
 
 }

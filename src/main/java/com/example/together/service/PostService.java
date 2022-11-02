@@ -108,7 +108,7 @@ public class PostService {
             return ResponseDto.fail("NOT_FOUND", "존재하지 않는 게시글 id 입니다.");
         }
 
-        List<Comment> commentList = commentRepository.findAllByPost(post);
+        List<Comment> commentList = commentRepository.selectDescComment(post);
         List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
 
         // 댓글 갯수 조회
@@ -116,15 +116,15 @@ public class PostService {
         // 직접기부한 사람 수
         Long directDnCnt = commentRepository.selectDirectDonationCnt(post);
         // 직접기부금 총 금액
-        long directDnTotal = commentRepository.selectDirectDonationSum(post);
+        Long directDnTotal = commentRepository.selectDirectDonationSum(post);
         // 댓글기부한 사람 수
-        long commentDnCnt = commentRepository.selectCommentDonationCnt(post);
+        Long commentDnCnt = commentRepository.selectCommentDonationCnt(post);
         // 댓글기부금 총 금액
-        long commentDnTotal = commentRepository.selectCommentDonationSum(post);
+        Long commentDnTotal = commentRepository.selectCommentDonationSum(post);
         // 응원기부한 사람 수
-        long cheerDnCnt = cheerRepository.selectCheerDonationCnt(post);
+        Long cheerDnCnt = cheerRepository.selectCheerDonationCnt(post);
         // 응원기부금 총 금액
-        long cheerDnTotal = cheerRepository.selecCheerDonationSum(post);
+        Long cheerDnTotal = cheerRepository.selecCheerDonationSum(post);
 
         // 해당 게시글에 대한 댓글 List
         for (Comment comment : commentList) {
