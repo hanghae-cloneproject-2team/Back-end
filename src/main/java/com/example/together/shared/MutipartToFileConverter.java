@@ -7,12 +7,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class MutipartToFileConverter {
   public Optional<File> convert(MultipartFile images) throws IOException {
     File convertFile = new File(
-        System.getProperty("user.dir") +"/"+ images.getOriginalFilename()
+//        System.getProperty("user.dir") +"/"+ images.getOriginalFilename()
+        System.getProperty("user.dir") +"/"+ UUID.randomUUID()
     );
     if(convertFile.createNewFile()) {
       try (FileOutputStream fos = new FileOutputStream(convertFile)) {

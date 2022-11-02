@@ -28,10 +28,11 @@ public class PostController {
   })
 
 
-  @PostMapping(value = "/api/posting",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
+//  @PostMapping(value = "/api/posting",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
+  @PostMapping(value = "/api/posting",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, produces = "application/json")
   public ResponseDto<?> createPost(@RequestPart(value = "postDto") PostRequestDto requestDto,
-                                   @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail,
-                                   @RequestParam(value = "image1", required = false) MultipartFile image1,
+                                   @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
+                                   @RequestPart(value = "image1", required = false) MultipartFile image1,
                                    HttpServletRequest request) {
     return postService.createPost(requestDto,image1, thumbnail, request);
   }

@@ -174,7 +174,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public ResponseDto<?> getAllPost() {
-        List<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
+        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
         List<PostListResponseDto> postListResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             postListResponseDtoList.add(
@@ -197,7 +197,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public ResponseDto<?> getPostbyCategory(String string) {
         Category category = new CategoryConverter().convertToEntityAttribute(string);
-        List<Post> postList = postRepository.findAllByCategory(category);
+        List<Post> postList = postRepository.findAllByCategoryOrderByCreatedAtDesc(category);
         List<PostListResponseDto> postListResponseDtoList = new ArrayList<>();
         for (Post post : postList) {
             postListResponseDtoList.add(
