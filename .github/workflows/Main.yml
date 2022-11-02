@@ -57,4 +57,4 @@ jobs:
             docker pull yusung/cloneproject:latest
             docker stop retro-together
             docker rm retro-together
-            docker run -d --rm --name retro-together -p 80:8080 puri12/retro-together
+            docker run -d --rm --name retro-together -p 80:8080 yusung/cloneproject
