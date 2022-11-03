@@ -11,7 +11,6 @@ public enum ErrorCode {
     INVALID_PARAMETER(400, "파라미터 값을 확인해주세요."),
     PASSWORDS_NOT_MATCHED(400,"비밀번호와 비밀번호 확인이 일치하지 않습니다."),
 
-
     //404 NOT_FOUND 찾지 못함
     MEMBER_NOT_FOUND(404,"사용자를 찾을 수 없습니다."),
     INVALID_MEMBER(404,"아이디(이메일)가 틀렸습니다."),

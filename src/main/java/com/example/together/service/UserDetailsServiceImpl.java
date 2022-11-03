@@ -1,7 +1,5 @@
 package com.example.together.service;
 
-import com.example.together.controller.exception.ErrorCode;
-import com.example.together.controller.handler.CustomException;
 import com.example.together.domain.Member;
 import com.example.together.domain.UserDetailsImpl;
 import com.example.together.repository.MemberRepository;

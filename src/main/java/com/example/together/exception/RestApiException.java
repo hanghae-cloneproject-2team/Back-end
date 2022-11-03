@@ -1,4 +1,4 @@
-package com.example.together.error;
+package com.example.together.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

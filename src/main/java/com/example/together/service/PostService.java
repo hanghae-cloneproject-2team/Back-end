@@ -1,7 +1,6 @@
 package com.example.together.service;
 
-import com.example.together.controller.exception.ErrorCode;
-import com.example.together.controller.handler.CustomException;
+import com.example.together.error.ErrorCode;
 import com.example.together.controller.response.CommentResponseDto;
 import com.example.together.controller.response.PostListResponseDto;
 import com.example.together.controller.response.PostResponseDto;
@@ -45,7 +44,6 @@ public class PostService {
 //      return ResponseDto.fail("MEMBER_NOT_FOUND",
 //          "로그인이 필요합니다.");
 //    }
-
         Member member = validateMember(request);
         if (null == member) {
             return ResponseDto.fail("INVALID_TOKEN", "Token이 유효하지 않습니다.");
@@ -248,6 +246,7 @@ public class PostService {
             return ResponseDto.fail(ErrorCode.AWS_S3_UPLOAD_FAIL.name(), ErrorCode.AWS_S3_UPLOAD_FAIL.getMessage());
 //            CustomException.toResponse(new CustomException(ErrorCode.AWS_S3_UPLOAD_FAIL));
         }
+
 
         String thumbnailUrl = "";
 

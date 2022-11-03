@@ -1,9 +1,9 @@
-package com.example.together.controller.handler;
+package com.example.together.handler;
 
 
-import com.example.together.controller.exception.EmptyMultipartFileException;
-import com.example.together.controller.exception.FileConvertException;
-import com.example.together.controller.exception.RemoveFileException;
+import com.example.together.exception.EmptyMultipartFileException;
+import com.example.together.exception.FileConvertException;
+import com.example.together.exception.RemoveFileException;
 import com.example.together.controller.response.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

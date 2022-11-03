@@ -3,8 +3,8 @@ package com.example.together.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.example.together.controller.exception.FileConvertException;
-import com.example.together.controller.exception.RemoveFileException;
+import com.example.together.exception.FileConvertException;
+import com.example.together.exception.RemoveFileException;
 import com.example.together.shared.MutipartToFileConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

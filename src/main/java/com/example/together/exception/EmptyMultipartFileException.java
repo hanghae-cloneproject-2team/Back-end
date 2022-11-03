@@ -1,4 +1,4 @@
-package com.example.together.controller.exception;
+package com.example.together.exception;
 
 public class EmptyMultipartFileException extends RuntimeException {
   public EmptyMultipartFileException() {
