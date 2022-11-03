@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CheerService {
+public class CheerService  {
     private final CommonService commonService;
     private final PostService postService;
     private final CheerRepository cheerRepository;
