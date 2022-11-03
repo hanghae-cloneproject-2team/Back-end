@@ -57,7 +57,10 @@ public class PostService {
         try {
             image1Url = fileS3Service.uploadFile(image1);
         } catch (IOException e) {
-            CustomException.toResponse(new CustomException(ErrorCode.AWS_S3_UPLOAD_FAIL));
+//            CustomException.toResponse(new CustomException(ErrorCode.AWS_S3_UPLOAD_FAIL));
+            return ResponseDto.fail(ErrorCode.AWS_S3_UPLOAD_FAIL.name(), ErrorCode.AWS_S3_UPLOAD_FAIL.getMessage());
+
+
         }
 
         String thumbnailUrl = "";
@@ -65,7 +68,9 @@ public class PostService {
         try {
             thumbnailUrl = fileS3Service.uploadFile(thumbnail);
         } catch (IOException e) {
-            CustomException.toResponse(new CustomException(ErrorCode.AWS_S3_UPLOAD_FAIL));
+//            CustomException.toResponse(new CustomException(ErrorCode.AWS_S3_UPLOAD_FAIL));
+            return ResponseDto.fail(ErrorCode.AWS_S3_UPLOAD_FAIL.name(), ErrorCode.AWS_S3_UPLOAD_FAIL.getMessage());
+
         }
 
         Post post = Post.builder()
@@ -240,7 +245,8 @@ public class PostService {
         try {
             image1Url = fileS3Service.uploadFile(image1);
         } catch (IOException e) {
-            CustomException.toResponse(new CustomException(ErrorCode.AWS_S3_UPLOAD_FAIL));
+            return ResponseDto.fail(ErrorCode.AWS_S3_UPLOAD_FAIL.name(), ErrorCode.AWS_S3_UPLOAD_FAIL.getMessage());
+//            CustomException.toResponse(new CustomException(ErrorCode.AWS_S3_UPLOAD_FAIL));
         }
 
         String thumbnailUrl = "";
@@ -248,7 +254,7 @@ public class PostService {
         try {
             thumbnailUrl = fileS3Service.uploadFile(thumbnail);
         } catch (IOException e) {
-            CustomException.toResponse(new CustomException(ErrorCode.AWS_S3_UPLOAD_FAIL));
+            return ResponseDto.fail(ErrorCode.AWS_S3_UPLOAD_FAIL.name(), ErrorCode.AWS_S3_UPLOAD_FAIL.getMessage());
         }
 
         post.update(requestDto, image1Url, thumbnailUrl);
