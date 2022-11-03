@@ -17,6 +17,7 @@ public enum ErrorCode {
     INVALID_MEMBER(404,"아이디(이메일)가 틀렸습니다."),
     INVALID_PASSWORD(404,"비밀번호가 틀렸습니다."),
     INVALID_TOKEN(404,"Token이 유효하지 않습니다."),
+    AWS_S3_UPLOAD_FAIL(404, "파일 업로드를 실패했습니다."),
 
 
     //409 CONFLICT 중복된 리소스
